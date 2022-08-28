@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>JS</title>
+</head>
+<body>
+    <h1 class="main-heading">JavaScript</h1>
+    <p class="task-description">Правильно расставь свойства объекта, чтобы создать 2 автомобиля</p>
+    <div class="workspace">
+        <div class="objects">
+            <div class="objects-wrapper">
+                <p class="title" id="car">Машина</p>
+                <div class="placeholder" id="car-object"></div>
+            </div>
+            <div class="objects-wrapper">
+                <p class="title" id="ford">Ford</p>
+                <div class="placeholder" id="ford-object"></div>
+            </div>
+            <div class="objects-wrapper">
+                <p class="title" id="renault">Renault</p>
+                <div class="placeholder" id="renault-object"></div>
+            </div>
+        </div>
+        <div class="properties">
+            <div class="property" draggable="true" data-value="2005">Год выпуска:2005</div>
+            <div class="property" draggable="true" data-value="ford">Марка: Ford</div>
+            <div class="property" draggable="true" data-value="black">Цвет: черный</div>
+            <div class="property" draggable="true" data-value="1.9">Объем двигателя: 1.9</div>
+            <div class="property" draggable="true" data-value="galaxy">Модель: Galaxy</div>
+            <div class="property" draggable="true" data-value="move">Может ехать</div>
+            <div class="property" draggable="true" data-value="stop">Может останавливаться</div>
+            <div class="property" draggable="true" data-value="renault">Марка: Renault</div>
+            <div class="property" draggable="true" data-value="turn">Может поворачивать</div>
+            <div class="property" draggable="true" data-value="stepway">Модель: Stepway</div>
+        </div>
+        <button class="check-btn">Проверить</button>
+        <div class="result"></div>
+    </div>
+    <script src="./objects.js"></script>
+    <script src="./script.js"></script>
+</body>
+</html>
