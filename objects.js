@@ -21,21 +21,36 @@ const renaultCar = Object.create(car);
 renaultCar.mark = 'renault';
 renaultCar.model = 'stepway';
 
-const fordPropertiesArray = [];
-const renaultPropertiesArray = [];
+const comparedCarObj = createComparedObject(car);
+const comparedFordObj = createComparedObject(fordCar);
+const comparedRenaultObj = createComparedObject(renaultCar);
 
-for (let j in fordCar) {
-    let value = fordCar[j];
-    if (typeof value === 'function') {
-        value = j;
-    }
-    fordPropertiesArray.push(value);
+let carStr = createStrFromObj(comparedCarObj);
+let fordStr = createStrFromObj(comparedFordObj);
+let renaultStr = createStrFromObj(comparedRenaultObj);
+
+
+function createStrFromObj(obj) {
+    let str = JSON.stringify(obj);
+    str = str.slice(1);
+    str = str.slice(0, -1);
+    str = str.split(',').sort().join(',');
+    return str;
 }
 
-for (let j in renaultCar) {
-    let value = renaultCar[j];
-    if (typeof value === 'function') {
-        value = j;
+function createComparedObject(obj) {
+    let comparedObject = {};
+    for (let j in obj) {
+        let value = obj[j];
+        if (typeof value === 'function') {
+            value = j;
+        }
+        if (typeof value === 'number') {
+            value = value.toString();
+        }
+        if (obj.hasOwnProperty(j)) {
+            comparedObject[j] = value;
+        }
     }
-    renaultPropertiesArray.push(value);
+    return comparedObject;
 }

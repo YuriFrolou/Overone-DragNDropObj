@@ -2,23 +2,24 @@ const properties = document.querySelectorAll('.property');
 const propertiesContainer = document.querySelector('.properties');
 const placeholders = document.querySelectorAll('.placeholder');
 const checkBtn = document.querySelector('.check-btn');
-const fordObject = document.querySelector('#ford-object');
-const renaultObject = document.querySelector('#renault-object');
+const carObjectElement = document.querySelector('#car-object');
+const fordObjectElement = document.querySelector('#ford-object');
+const renaultObjectElement = document.querySelector('#renault-object');
 const resultMessage = document.querySelector('.result');
-
+const carObject = {};
+const fordObject = {};
+const renaultObject = {};
 
 for (const property of properties) {
     property.addEventListener('dragstart', dragstart);
     property.addEventListener('dragend', dragend);
 }
 
-
 for (const placeholder of placeholders) {
     placeholder.addEventListener('dragover', dragover);
     placeholder.addEventListener('dragenter', dragenter);
     placeholder.addEventListener('dragleave', dragleave);
     placeholder.addEventListener('drop', dragdrop);
-
 }
 
 function dragstart(event) {
@@ -55,6 +56,7 @@ function dragdrop(event) {
     });
     const activeElement = document.querySelector('.property.active');
     event.target.append(activeElement);
+    createObject(event.target.dataset.value, activeElement.dataset.name, activeElement.dataset.value);
 
     event.target.childNodes.forEach((elem) => {
         elem.style.transform = "translateY(0)";
@@ -79,19 +81,18 @@ checkBtn.addEventListener('click', () => {
 });
 
 function checkAnswers() {
-    const fordChildren = fordObject.children;
-    const renaultChildren = renaultObject.children;
-    for (let i = 0; i < fordChildren.length; i++) {
-        if (fordPropertiesArray.indexOf(fordChildren[i].dataset.value) === -1) {
-            return false;
-        }
+    const fordObjectString = createStrFromObj(fordObject);
+    const renaultObjectString = createStrFromObj(renaultObject);
+    const carObjectString = createStrFromObj(carObject);
+
+    if (carObjectString !== carStr) {
+        return false;
     }
-    for (let i = 0; i < renaultChildren.length; i++) {
-        if (renaultPropertiesArray.indexOf(renaultChildren[i].dataset.value) === -1) {
-            return false;
-        }
+    if (fordObjectString !== fordStr) {
+        return false;
     }
-    return true;
+    return renaultObjectString === renaultStr;
+
 }
 
 function showResult(message) {
@@ -100,4 +101,18 @@ function showResult(message) {
     setTimeout(function () {
         resultMessage.classList.toggle("active");
     }, 2000);
+}
+
+function createObject(element, name, value) {
+    switch (element) {
+        case 'car':
+            carObject[name] = value;
+            break;
+        case 'ford':
+            fordObject[name] = value;
+            break;
+        case 'renault':
+            renaultObject[name] = value;
+            break;
+    }
 }
