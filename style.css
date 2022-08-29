@@ -85,6 +85,7 @@ button:hover {
 
 .property {
     flex-basis: 30%;
+    min-width: 200px;
     padding: 5px 10px;
     font-size: 18px;
     letter-spacing: 1px;

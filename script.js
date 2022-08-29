@@ -2,13 +2,11 @@ const properties = document.querySelectorAll('.property');
 const propertiesContainer = document.querySelector('.properties');
 const placeholders = document.querySelectorAll('.placeholder');
 const checkBtn = document.querySelector('.check-btn');
-const carObjectElement = document.querySelector('#car-object');
-const fordObjectElement = document.querySelector('#ford-object');
-const renaultObjectElement = document.querySelector('#renault-object');
 const resultMessage = document.querySelector('.result');
-const carObject = {};
-const fordObject = {};
-const renaultObject = {};
+let carObject = {};
+let fordObject = {};
+let renaultObject = {};
+
 
 for (const property of properties) {
     property.addEventListener('dragstart', dragstart);
@@ -29,6 +27,11 @@ function dragstart(event) {
         elem.classList.remove('active');
     }
     event.target.classList.add('active');
+
+    for (let elem of placeholders) {
+        elem.classList.remove('active');
+    }
+    event.target.parentNode.classList.add('active');
 }
 
 function dragend(event) {
@@ -49,15 +52,16 @@ function dragleave(event) {
 
 function dragdrop(event) {
     event.target.classList.remove('hovered');
-
     event.target.childNodes.forEach((elem) => {
         elem.style.transform = "translateY(-100px)";
         elem.style.visibility = 'hidden';
     });
     const activeElement = document.querySelector('.property.active');
-    event.target.append(activeElement);
+    if (document.querySelector('.placeholder.active') !== null) {
+        removeProperty(activeElement.dataset.name);
+    }
     createObject(event.target.dataset.value, activeElement.dataset.name, activeElement.dataset.value);
-
+    event.target.append(activeElement);
     event.target.childNodes.forEach((elem) => {
         elem.style.transform = "translateY(0)";
         elem.style.visibility = 'visible';
@@ -66,6 +70,7 @@ function dragdrop(event) {
     if (propertiesContainer.children.length === 0) {
         checkBtn.classList.add('active');
     }
+
 }
 
 checkBtn.addEventListener('click', () => {
@@ -91,7 +96,10 @@ function checkAnswers() {
     if (fordObjectString !== fordStr) {
         return false;
     }
-    return renaultObjectString === renaultStr;
+    if (renaultObjectString !== renaultStr) {
+        return false;
+    }
+    return true;
 
 }
 
@@ -104,6 +112,7 @@ function showResult(message) {
 }
 
 function createObject(element, name, value) {
+
     switch (element) {
         case 'car':
             carObject[name] = value;
@@ -113,6 +122,22 @@ function createObject(element, name, value) {
             break;
         case 'renault':
             renaultObject[name] = value;
+            break;
+    }
+}
+
+
+function removeProperty(name) {
+
+    switch (document.querySelector('.placeholder.active').dataset.value) {
+        case 'car':
+            delete carObject[name];
+            break;
+        case 'ford':
+            delete fordObject[name];
+            break;
+        case 'renault':
+            delete renaultObject[name];
             break;
     }
 }
